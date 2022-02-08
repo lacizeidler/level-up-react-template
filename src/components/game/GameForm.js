@@ -25,6 +25,14 @@ export const GameForm = () => {
         .then(setGameTypes)
     }, [])
 
+    const changeGameState = (domEvent) => {
+        const copy = {...currentGame}
+        const key = domEvent.target.name
+        const value = domEvent.target.value
+        copy[key] = value
+        setCurrentGame(copy)
+    }
+
     return (
         <form className="gameForm">
             <h2 className="gameForm__title">Register New Game</h2>
@@ -33,13 +41,7 @@ export const GameForm = () => {
                     <label htmlFor="title">Title: </label>
                     <input type="text" name="title" required autoFocus className="form-control"
                         value={currentGame.title}
-                        onChange={
-                            (evt) => {
-                                const copy = {...currentGame}
-                                copy.title = evt.target.value
-                                setCurrentGame(copy)
-                            }
-                        }
+                        onChange={changeGameState}
                     />
                 </div>
             </fieldset>
@@ -48,13 +50,7 @@ export const GameForm = () => {
                     <label htmlFor="maker">Maker: </label>
                     <input type="text" name="maker" required autoFocus className="form-control"
                         value={currentGame.maker}
-                        onChange={
-                            (evt) => {
-                            const copy = {...currentGame}
-                            copy.maker = evt.target.value
-                            setCurrentGame(copy)
-                        }
-                    }
+                        onChange={changeGameState}
                     />
                 </div>
             </fieldset>
@@ -63,13 +59,7 @@ export const GameForm = () => {
                     <label htmlFor="numberOfPlayers">Number of Players: </label>
                     <input type="number" name="numberOfPlayers" required autoFocus className="form-control"
                         value={currentGame.numberOfPlayers}
-                        onChange={
-                            (evt) => {
-                            const copy = {...currentGame}
-                            copy.numberOfPlayers = evt.target.value
-                            setCurrentGame(copy)
-                        }
-                    }
+                        onChange={changeGameState}
                     />
                 </div>
             </fieldset>
@@ -78,30 +68,18 @@ export const GameForm = () => {
                     <label htmlFor="skillLevel">Skill Level: </label>
                     <input type="number" name="skillLevel" required autoFocus className="form-control"
                         value={currentGame.skillLevel}
-                        onChange={
-                            (evt) => {
-                            const copy = {...currentGame}
-                            copy.skillLevel = evt.target.value
-                            setCurrentGame(copy)
-                        }
-                    }
+                        onChange={changeGameState}
                     />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="gameType">Game Type: </label>
-                    <select>
+                    <select name="gameTypeId" value={currentGame.gameTypeId} onChange={changeGameState}>
                         <option value={0}>Select a Game Type</option>
                         {
                             gameTypes.map((gameType) => {
-                                return <option key={gameType.id} value={currentGame.gameTypeId} onChange={
-                                    (evt) => {
-                                        const copy = {...currentGame}
-                                        copy.gameTypeId = evt.target.value
-                                        setCurrentGame(copy)
-                                    }
-                                }>{gameType.label}</option>
+                                return <option key={gameType.id} value={gameType.id}>{gameType.label}</option>
                             })
                         }
                     </select>
@@ -118,9 +96,9 @@ export const GameForm = () => {
                     const game = {
                         maker: currentGame.maker,
                         title: currentGame.title,
-                        numberOfPlayers: parseInt(currentGame.numberOfPlayers),
-                        skillLevel: parseInt(currentGame.skillLevel),
-                        gameTypeId: parseInt(currentGame.gameTypeId)
+                        number_of_players: parseInt(currentGame.numberOfPlayers),
+                        skill_level: parseInt(currentGame.skillLevel),
+                        game_type_id: parseInt(currentGame.gameTypeId)
                     }
 
                     // Send POST request to your API

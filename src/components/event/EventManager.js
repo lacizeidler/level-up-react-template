@@ -1,7 +1,7 @@
 import { Settings } from "../utils/Settings"
 
-export const getGames = () => {
-    return fetch("http://localhost:8000/games", {
+export const getEvents = () => {
+    return fetch("http://localhost:8000/events", {
         headers:{
             "Authorization": `Token ${localStorage.getItem("lu_token")}`
         }
@@ -9,8 +9,8 @@ export const getGames = () => {
         .then(response => response.json())
 }
 
-export const getGameById = (id) => {
-    return fetch(`http://localhost:8000/games/${id}`, {
+export const getEventById = (id) => {
+    return fetch(`http://localhost:8000/events/${id}`, {
         headers:{
             "Authorization": `Token ${localStorage.getItem("lu_token")}`
         }
@@ -18,24 +18,15 @@ export const getGameById = (id) => {
         .then(response => response.json())
 }
 
-export const createGame = (game) => {
+export const createEvent = (event) => {
     const fetchOptions = {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Token ${localStorage.getItem("lu_token")}`
         },
-        body: JSON.stringify(game)
+        body: JSON.stringify(event)
     }
-    return fetch(`${Settings.remoteURL}/games`, fetchOptions)
+    return fetch(`${Settings.remoteURL}/events`, fetchOptions)
     .then(response => response.json())
-}
-
-export const getGameTypes = () => {
-    return fetch("http://localhost:8000/gametypes", {
-        headers:{
-            "Authorization": `Token ${localStorage.getItem("lu_token")}`
-        }
-    })
-        .then(response => response.json())
 }
